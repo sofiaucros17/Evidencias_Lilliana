@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller de Promesas en JavaScript</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 to-blue-50 min-h-screen font-sans text-gray-800">
+  <div class="max-w-4xl mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">🧪 Taller Interactivo de Promesas en JavaScript</h1>
+
+    <div class="mb-4">
+      <label for="casoSelector" class="block font-semibold text-gray-700 mb-1">Selecciona un caso:</label>
+      <select id="casoSelector" class="w-full px-3 py-2 border rounded-xl bg-white shadow-sm focus:outline-none focus:ring focus:ring-indigo-200">
+        <option value="">-- Elegir --</option>
+      </select>
+    </div>
+
+    <div id="infoCaso" class="bg-white rounded-xl shadow-md p-4 hidden">
+      <h2 class="text-xl font-bold mb-2 text-indigo-600" id="nombreCaso"></h2>
+      <p class="mb-2"><strong>📝 Descripción:</strong> <span id="descripcionCaso"></span></p>
+      <p class="mb-2"><strong>🧠 Macroalgoritmo:</strong> <span id="macroalgoritmoCaso"></span></p>
+      <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code id="pseudocodigoCaso"></code></pre>
+      <button id="btnEjecutar" class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl">▶ Ejecutar caso</button>
+      <div id="resultado" class="mt-4 p-3 bg-blue-50 border-l-4 border-indigo-300 rounded text-indigo-900 font-medium hidden"></div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
