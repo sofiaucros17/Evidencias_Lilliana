@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Formulario - Tailwind + JS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'spin-fast': 'spin 0.5s linear infinite',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-in-out'
+                    },
+                    keyframes: {
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="bg-white shadow-lg border-b-4 border-purple-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-purple-600">📋 FormApp</span>
+                </div>
+                
+                <!-- Enlaces de navegación -->
+                <div class="flex space-x-8">
+                    <button onclick="mostrarSeccion('inicio')" 
+                            id="nav-inicio"
+                            class="nav-btn text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-blue-500">
+                        🏠 Inicio
+                    </button>
+                    <button onclick="mostrarSeccion('formulario')" 
+                            id="nav-formulario"
+                            class="nav-btn text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-blue-500">
+                        📝 Formulario
+                    </button>
+                    <button onclick="mostrarSeccion('resultado')" 
+                            id="nav-resultado"
+                            class="nav-btn text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-blue-500">
+                        📊 Resultado
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- SECCIÓN INICIO -->
+        <div id="seccion-inicio" class="seccion">
+            <div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+                <div class="text-center">
+                    <div class="text-6xl mb-6 animate-bounce-in">🚀</div>
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Bienvenido a FormApp</h1>
+                    <p class="text-xl text-gray-600 mb-8">Sistema de gestión de solicitudes con Tailwind CSS y JavaScript</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+                            <div class="text-3xl mb-3">📝</div>
+                            <h3 class="font-semibold text-gray-800">Formulario Dinámico</h3>
+                            <p class="text-sm text-gray-600 mt-2">Validación en tiempo real</p>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-xl border-l-4 border-green-500">
+                            <div class="text-3xl mb-3">⚡</div>
+                            <h3 class="font-semibold text-gray-800">JavaScript Puro</h3>
+                            <p class="text-sm text-gray-600 mt-2">Promesas asíncronas</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500">
+                            <div class="text-3xl mb-3">🎨</div>
+                            <h3 class="font-semibold text-gray-800">Tailwind CSS</h3>
+                            <p class="text-sm text-gray-600 mt-2">Diseño responsivo</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="mostrarSeccion('formulario')" 
+                            class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Comenzar →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN FORMULARIO -->
+        <div id="seccion-formulario" class="seccion hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+                <div class="text-center mb-8">
+                    <div class="text-5xl mb-4">📝</div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Formulario de Solicitud</h2>
+                    <p class="text-gray-600">Complete todos los campos obligatorios</p>
+                </div>
+
+                <form id="formulario-solicitud" class="space-y-6">
+                    <!-- Campo Nombre -->
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
+                            👤 Nombre Completo *
+                        </label>
+                        <input type="text" 
+                               id="nombre" 
+                               name="nombre" 
+                               required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+                               placeholder="Ingrese su nombre completo">
+                        <div id="error-nombre" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Campo Correo -->
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">
+                            📧 Correo Electrónico *
+                        </label>
+                        <input type="email" 
+                               id="correo" 
+                               name="correo" 
+                               required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+                               placeholder="ejemplo@correo.com">
+                        <div id="error-correo" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Campo Tipo de Solicitud -->
+                    <div>
+                        <label for="tipo-solicitud" class="block text-sm font-medium text-gray-700 mb-2">
+                            📋 Tipo de Solicitud *
+                        </label>
+                        <select id="tipo-solicitud" 
+                                name="tipoSolicitud" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                            <option value="">Seleccione una opción</option>
+                            <option value="informacion">📄 Solicitud de Información</option>
+                            <option value="soporte">🛠️ Soporte Técnico</option>
+                            <option value="sugerencia">💡 Sugerencia</option>
+                            <option value="reclamo">⚠️ Reclamo</option>
+                            <option value="otro">📝 Otro</option>
+                        </select>
+                        <div id="error-tipo" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Botón Enviar -->
+                    <div class="text-center pt-6">
+                        <button type="submit" 
+                                id="btn-enviar"
+                                class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto">
+                            <span id="btn-texto">🚀 Enviar Solicitud</span>
+                            <div id="btn-loading" class="hidden ml-3">
+                                <div class="animate-spin-fast rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- SECCIÓN RESULTADO -->
+        <div id="seccion-resultado" class="seccion hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+                <div class="text-center">
+                    <div class="text-5xl mb-4">📊</div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Resultado de la Solicitud</h2>
+                    
+                    <div id="contenido-resultado">
+                        <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8">
+                            <div class="text-4xl mb-4">📋</div>
+                            <p class="text-gray-600 text-lg">No hay solicitudes procesadas aún</p>
+                            <p class="text-gray-500 text-sm mt-2">Complete el formulario para ver los resultados aquí</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="mostrarSeccion('formulario')" 
+                            class="mt-6 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300">
+                        ← Volver al Formulario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== VARIABLES GLOBALES ==========
+        let solicitudActual = null;
+
+        // ========== FUNCIÓN PARA MOSTRAR SECCIONES ==========
+        function mostrarSeccion(nombreSeccion) {
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(seccion => {
+                seccion.classList.add('hidden');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(`seccion-${nombreSeccion}`).classList.remove('hidden');
+            
+            // Actualizar estilos del menú
+            const botones = document.querySelectorAll('.nav-btn');
+            botones.forEach(btn => {
+                btn.classList.remove('text-blue-600', 'border-blue-500');
+                btn.classList.add('text-gray-700', 'border-transparent');
+            });
+            
+            // Resaltar botón activo
+            const botonActivo = document.getElementById(`nav-${nombreSeccion}`);
+            botonActivo.classList.remove('text-gray-700', 'border-transparent');
+            botonActivo.classList.add('text-blue-600', 'border-blue-500');
+        }
+
+        // ========== FUNCIÓN PARA VALIDAR FORMULARIO ==========
+        function validarFormulario(datos) {
+            let esValido = true;
+            
+            // Limpiar errores anteriores
+            document.querySelectorAll('[id^="error-"]').forEach(error => {
+                error.classList.add('hidden');
+                error.textContent = '';
+            });
+            
+            // Validar nombre
+            if (!datos.nombre || datos.nombre.trim().length < 2) {
+                mostrarError('error-nombre', 'El nombre debe tener al menos 2 caracteres');
+                esValido = false;
+            }
+            
+            // Validar correo
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!datos.correo || !regexEmail.test(datos.correo)) {
+                mostrarError('error-correo', 'Ingrese un correo electrónico válido');
+                esValido = false;
+            }
+            
+            // Validar tipo de solicitud
+            if (!datos.tipoSolicitud) {
+                mostrarError('error-tipo', 'Seleccione un tipo de solicitud');
+                esValido = false;
+            }
+            
+            return esValido;
+        }
+
+        // ========== FUNCIÓN PARA MOSTRAR ERRORES ==========
+        function mostrarError(idError, mensaje) {
+            const elementoError = document.getElementById(idError);
+            elementoError.textContent = mensaje;
+            elementoError.classList.remove('hidden');
+        }
+
+        // ========== FUNCIÓN PRINCIPAL CON PROMESAS ==========
+        function procesarSolicitudAsincrona(datos) {
+            return new Promise((resolve, reject) => {
+                // Simular validación y guardado asíncrono con setTimeout (2 segundos)
+                setTimeout(() => {
+                    // Validar datos
+                    if (!validarFormulario(datos)) {
+                        reject('Error en la validación de datos');
+                        return;
+                    }
+                    
+                    // Simular guardado exitoso
+                    const resultado = {
+                        id: Math.floor(Math.random() * 10000) + 1000,
+                        timestamp: new Date().toLocaleString('es-ES'),
+                        datos: datos,
+                        estado: 'exitoso'
+                    };
+                    
+                    resolve(resultado);
+                }, 2000);
+            });
+        }
+
+        // ========== FUNCIÓN PARA MOSTRAR RESULTADO EXITOSO ==========
+        function mostrarResultadoExitoso(resultado) {
+            const tipoEmojis = {
+                'informacion': '📄',
+                'soporte': '🛠️',
+                'sugerencia': '💡',
+                'reclamo': '⚠️',
+                'otro': '📝'
+            };
+            
+            const tipoTextos = {
+                'informacion': 'Solicitud de Información',
+                'soporte': 'Soporte Técnico',
+                'sugerencia': 'Sugerencia',
+                'reclamo': 'Reclamo',
+                'otro': 'Otro'
+            };
+            
+            const html = `
+                <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg animate-bounce-in">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-3">✅</div>
+                        <h3 class="text-xl font-semibold text-green-800">¡Solicitud Enviada Exitosamente!</h3>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                        <div class="grid gap-3 text-left">
+                            <div class="flex items-center">
+                                <strong class="text-gray-700 w-32">📋 ID Solicitud:</strong>
+                                <span class="text-gray-900">#${resultado.id}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <strong class="text-gray-700 w-32">⏰ Fecha:</strong>
+                                <span class="text-gray-900">${resultado.timestamp}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <strong class="text-gray-700 w-32">👤 Nombre:</strong>
+                                <span class="text-gray-900">${resultado.datos.nombre}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <strong class="text-gray-700 w-32">📧 Correo:</strong>
+                                <span class="text-gray-900">${resultado.datos.correo}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <strong class="text-gray-700 w-32">${tipoEmojis[resultado.datos.tipoSolicitud]} Tipo:</strong>
+                                <span class="text-gray-900">${tipoTextos[resultado.datos.tipoSolicitud]}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-green-100 rounded-lg">
+                        <p class="text-green-800 text-sm">
+                            Su solicitud ha sido procesada correctamente. Recibirá una confirmación por correo electrónico en breve.
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('contenido-resultado').innerHTML = html;
+            mostrarSeccion('resultado');
+        }
+
+        // ========== FUNCIÓN PARA MOSTRAR ERROR ==========
+        function mostrarResultadoError(error) {
+            const html = `
+                <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg animate-bounce-in">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-3">❌</div>
+                        <h3 class="text-xl font-semibold text-red-800">Error al Procesar Solicitud</h3>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                        <p class="text-red-700">${error}</p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button onclick="mostrarSeccion('formulario')" 
+                                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                            Intentar Nuevamente
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('contenido-resultado').innerHTML = html;
+            mostrarSeccion('resultado');
+        }
+
+        // ========== FUNCIÓN PARA CAMBIAR ESTADO DEL BOTÓN ==========
+        function cambiarEstadoBoton(cargando = false) {
+            const btnTexto = document.getElementById('btn-texto');
+            const btnLoading = document.getElementById('btn-loading');
+            const btnEnviar = document.getElementById('btn-enviar');
+            
+            if (cargando) {
+                btnTexto.textContent = 'Procesando...';
+                btnLoading.classList.remove('hidden');
+                btnEnviar.disabled = true;
+                btnEnviar.classList.add('opacity-75', 'cursor-not-allowed');
+            } else {
+                btnTexto.textContent = '🚀 Enviar Solicitud';
+                btnLoading.classList.add('hidden');
+                btnEnviar.disabled = false;
+                btnEnviar.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        }
+
+        // ========== EVENT LISTENER PARA EL FORMULARIO ==========
+        document.getElementById('formulario-solicitud').addEventListener('submit', function(evento) {
+            evento.preventDefault();
+            
+            // Cambiar estado del botón a cargando
+            cambiarEstadoBoton(true);
+            
+            // Recopilar datos del formulario
+            const formData = new FormData(this);
+            const datos = {
+                nombre: formData.get('nombre').trim(),
+                correo: formData.get('correo').trim(),
+                tipoSolicitud: formData.get('tipoSolicitud')
+            };
+            
+            // Procesar solicitud usando Promesas
+            procesarSolicitudAsincrona(datos)
+                .then(resultado => {
+                    // Guardar solicitud actual
+                    solicitudActual = resultado;
+                    
+                    // Mostrar resultado exitoso
+                    mostrarResultadoExitoso(resultado);
+                    
+                    // Limpiar formulario
+                    document.getElementById('formulario-solicitud').reset();
+                })
+                .catch(error => {
+                    // Mostrar error
+                    mostrarResultadoError(error);
+                })
+                .finally(() => {
+                    // Restaurar estado del botón
+                    cambiarEstadoBoton(false);
+                });
+        });
+
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar sección de inicio por defecto
+            mostrarSeccion('inicio');
+        });
+    </script>
+
+</body>
+</html>
